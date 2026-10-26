@@ -1,0 +1,3 @@
+transaction_date,transaction_type,amount,category,payment_method,description,external_transaction_id
+2025-01-05,Expense,12.50,Food,Credit Card,Lunch at cafe,EXT-0001
+2025-01-31,Income,3200.00,Salary,Bank Transfer,January salary,EXT-0002

@@ -1,0 +1,28 @@
+flowchart TD
+    A[Expense transactions<br/>from PostgreSQL] --> B[Exclude Income]
+    B --> C[Aggregate by calendar month]
+    C --> D[Sort chronologically +<br/>fill missing months with 0]
+    D --> E{Enough months?<br/>seqLen+1+val+test}
+    E -- No --> ERR[Explainable insufficient-data<br/>response + demo option]
+    E -- Yes --> F[Chronological split<br/>train / val / test]
+    F --> G[Fit MinMaxScaler<br/>on TRAIN months only]
+    G --> H[Transform full series<br/>with fitted scaler]
+    H --> I[Sliding-window sequences<br/>window = previous 6 months]
+    I --> J[Train LSTM model]
+
+    subgraph Model architecture
+      J --> J1[LSTM 64 units]
+      J1 --> J2[Dropout 0.2]
+      J2 --> J3[Dense 32, ReLU]
+      J3 --> J4[Dense 1 output]
+    end
+
+    J4 --> K[Optimizer: Adam<br/>Loss: MSE<br/>EarlyStopping on val_loss, patience 10]
+    K --> L[Evaluate on unseen test targets<br/>MAE / RMSE / MAPE]
+    L --> M[Compare vs baselines:<br/>naive last-month + 3-month moving average]
+    M --> N[Persist artifacts:<br/>model.json + weights.bin<br/>scaler.json / meta.json / eval.json]
+    M --> O[Record model_runs + predictions<br/>in PostgreSQL]
+    H --> P[predictNext:<br/>latest 6-month window]
+    N --> P
+    P --> Q[Inverse-transform scaled output<br/>clamp to >= 0]
+    Q --> R[Next-calendar-month forecast<br/>shown on Dashboard / Prediction / Reports<br/>never mixed with ACTUAL expenditure]

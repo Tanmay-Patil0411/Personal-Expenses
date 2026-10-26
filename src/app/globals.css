@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50: #f0fdfa;
+  --color-brand-100: #ccfbf1;
+  --color-brand-200: #99f6e4;
+  --color-brand-300: #5eead4;
+  --color-brand-400: #2dd4bf;
+  --color-brand-500: #14b8a6;
+  --color-brand-600: #0d9488;
+  --color-brand-700: #0f766e;
+  --color-nav: #0f172a;
+  --color-nav-soft: #1e293b;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: #f1f5f9;
+  color: #0f172a;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+}
+
+/* Custom scrollbar for the sidebar */
+.sidebar-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 8px;
+}
+
+.card {
+  @apply rounded-xl border border-slate-200 bg-white shadow-sm;
+}
+
+.btn,
+.btn-primary,
+.btn-ghost,
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.15s ease, color 0.15s ease,
+    border-color 0.15s ease;
+  cursor: pointer;
+}
+.btn:disabled,
+.btn-primary:disabled,
+.btn-ghost:disabled,
+.btn-danger:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.btn-primary {
+  background: var(--color-brand-600, #0d9488);
+  color: #ffffff;
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-brand-700, #0f766e);
+}
+.btn-ghost {
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+}
+.btn-ghost:hover:not(:disabled) {
+  background: #f8fafc;
+}
+.btn-danger {
+  background: #e11d48;
+  color: #ffffff;
+}
+.btn-danger:hover:not(:disabled) {
+  background: #be123c;
+}
+
+.input {
+  @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200;
+}
+
+.label {
+  @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500;
+}
+
+/* ==========================================================================
+   Print & PDF Export Styles (A4 Paper Optimization)
+   ========================================================================== */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm 10mm 12mm 10mm;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 10pt !important;
+    line-height: 1.35 !important;
+  }
+
+  /* Hide navigation, sidebar, interactive filters, and action buttons */
+  aside,
+  nav,
+  header,
+  .no-print,
+  button,
+  .btn,
+  .btn-ghost,
+  .btn-primary,
+  .btn-danger,
+  input,
+  select,
+  .pagination-controls {
+    display: none !important;
+  }
+
+  /* Expand main container to full printable width */
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  #report-area {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Cards styling for print: prevent page break splitting inside cards */
+  .card {
+    box-shadow: none !important;
+    border: 1px solid #cbd5e1 !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    margin-bottom: 10pt !important;
+    padding: 8pt 10pt !important;
+  }
+
+  /* Table styling for print: repeat headers across pages and avoid row breaks */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 9pt !important;
+  }
+
+  thead {
+    display: table-header-group !important;
+  }
+
+  tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  th,
+  td {
+    padding: 4pt 6pt !important;
+  }
+
+  /* Clean page break utilities */
+  .print-page-break {
+    page-break-before: always !important;
+    break-before: page !important;
+  }
+}

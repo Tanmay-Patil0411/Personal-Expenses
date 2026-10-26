@@ -1,0 +1,52 @@
+erDiagram
+    TRANSACTIONS {
+        int id PK
+        date transaction_date
+        enum transaction_type "Income | Expense"
+        numeric amount "CHECK > 0"
+        text category
+        text payment_method
+        text description
+        timestamptz created_at
+        text external_transaction_id UK "nullable, dedupe key"
+    }
+
+    BUDGETS {
+        int id PK
+        text month "YYYY-MM"
+        text category "NULL = overall budget"
+        numeric budget_amount "CHECK > 0"
+        timestamptz created_at
+    }
+
+    MODEL_RUNS {
+        int id PK
+        text model_version
+        timestamptz training_start
+        timestamptz training_end
+        int sequence_length
+        text training_status "running | completed | failed"
+        numeric mae
+        numeric rmse
+        numeric mape
+        int train_samples
+        int val_samples
+        int test_samples
+        timestamptz created_at
+    }
+
+    PREDICTIONS {
+        int id PK
+        text target_month "YYYY-MM"
+        numeric predicted_expense
+        text model_version
+        timestamptz created_at
+    }
+
+    APP_SETTINGS {
+        text key PK
+        jsonb-like value "JSON encoded settings"
+    }
+
+    MODEL_RUNS ||--o{ PREDICTIONS : "same model_version"
+    BUDGETS }|--|| TRANSACTIONS : "compared by month+category (computed, not stored FK)"

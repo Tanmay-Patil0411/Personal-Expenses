@@ -1,0 +1,36 @@
+graph TD
+    subgraph Browser
+      UI[Next.js React UI<br/>Dashboard / Transactions / Analytics /<br/>Prediction / Budgets / Insights / Reports / Settings]
+      CH[Plotly.js interactive charts]
+    end
+
+    subgraph Server[Next.js App Router Server]
+      API[REST API routes<br/>/api/transactions /api/budgets /api/analytics<br/>/api/ml/train /api/ml/status /api/csv /api/reports]
+      SRV1[transactionService.ts]
+      SRV2[analytics.ts]
+      SRV3[budgetService.ts]
+      SRV4[insights.ts]
+      SRV5[csvService.ts]
+      SRV6[reportService.ts]
+      ML1[ml/pipeline.ts]
+      ML2[ml/train.ts LSTM]
+      ML3[ml/predict.ts]
+      ML4[ml/dataset.ts + scaler.ts]
+    end
+
+    subgraph Store[Persistence]
+      PG[(PostgreSQL<br/>transactions / budgets /<br/>model_runs / predictions / app_settings)]
+      FS[(.ml-artifacts/<br/>model.json + weights.bin<br/>scaler.json / meta.json / eval.json)]
+    end
+
+    UI -->|fetch JSON| API
+    API --> SRV1 & SRV2 & SRV3 & SRV4 & SRV5 & SRV6
+    API --> ML1
+    ML1 --> ML2 & ML3
+    ML2 --> ML4
+    ML3 --> ML4
+    SRV1 & SRV3 -->|Drizzle ORM| PG
+    ML1 -->|model runs + predictions| PG
+    ML2 -->|save| FS
+    ML3 -->|load| FS
+    CH --- UI

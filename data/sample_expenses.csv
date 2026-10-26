@@ -1,0 +1,13 @@
+transaction_date,transaction_type,amount,category,payment_method,description,external_transaction_id
+2025-06-01,Income,3200.00,Salary,Bank Transfer,June salary,SAMPLE-INC-2025-06
+2025-06-03,Expense,850.00,Housing,Bank Transfer,Monthly rent,SAMPLE-EXP-001
+2025-06-05,Expense,64.20,Groceries,Debit Card,Weekly groceries,SAMPLE-EXP-002
+2025-06-07,Expense,18.50,Food,Cash,Pizza night,SAMPLE-EXP-003
+2025-06-10,Expense,35.00,Transport,Cash,Fuel top-up,SAMPLE-EXP-004
+2025-06-12,Expense,12.99,Subscriptions,Credit Card,Streaming service,SAMPLE-EXP-005
+2025-06-15,Expense,120.00,Utilities,Bank Transfer,Electricity bill,SAMPLE-EXP-006
+2025-06-18,Expense,89.99,Shopping,Credit Card,New running shoes,SAMPLE-EXP-007
+2025-06-21,Expense,45.00,Entertainment,Cash,Movie tickets,SAMPLE-EXP-008
+2025-06-25,Expense,60.00,Healthcare,UPI,Pharmacy,SAMPLE-EXP-009
+2025-07-01,Income,3250.00,Salary,Bank Transfer,July salary,SAMPLE-INC-2025-07
+2025-07-02,Expense,450.00,Travel,Credit Card,Weekend trip flights,SAMPLE-EXP-010
